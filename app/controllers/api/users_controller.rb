@@ -8,11 +8,9 @@ class Api::UsersController < ApplicationController
 
   def show
     user = User.find_by(name: user_params[:user][:name])
-    user_mapped_ids = user.intervals.map {|int| int.mapped_id}
-    @user_intervals = {}
-    user_mapped_ids.each do |mapped_id|
-      timestamp = user.user_intervals[mapped_id]["ts"]
-      @user_intervals[timestamp] = mapped_id
+    @user_mapped_ids = user.intervals.map {|int| int.mapped_id}
+    @user_timestamps = @user_mapped_ids.map do |mapped_id|
+      user.user_intervals[mapped_id]["ts"]
     end
     render :show
   end
