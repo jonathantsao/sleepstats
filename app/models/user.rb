@@ -6,10 +6,16 @@ class User < ApplicationRecord
   attr_reader :user_intervals
 
   has_many :intervals
+  after_create :http_parse
+
+  def user_intervals
+    @user_intervals ||= HTTParty.get(self.url).parsed_response["intervals"]
+  end
 
   def http_parse
     json_data = HTTParty.get(self.url).parsed_response
-    @user_intervals = json_data["intervals"]
+    User.create_intervals(self.id, json_data["intervals"])
+    nil
   end
 
   def self.create_intervals(user_id, intervals)
