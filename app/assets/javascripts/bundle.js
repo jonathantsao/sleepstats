@@ -22163,7 +22163,7 @@ var _users_list_container = __webpack_require__(176);
 
 var _users_list_container2 = _interopRequireDefault(_users_list_container);
 
-var _interval_list_container = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./interval_list/interval_list_container\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+var _interval_list_container = __webpack_require__(178);
 
 var _interval_list_container2 = _interopRequireDefault(_interval_list_container);
 
@@ -23606,6 +23606,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var initialState = {
   users: [],
+  viewedUser: null,
   viewedUserIntervals: null,
   viewedInterval: null
 };
@@ -23625,6 +23626,7 @@ var uiReducer = function uiReducer() {
     case _ui_actions.RECEIVE_USER:
       var intervals = action.intervals["intervals"];
       newState = (0, _merge2.default)({}, state);
+      newState.viewedUser = action.intervals["user"];
       newState.viewedUserIntervals = intervals;
       return newState;
     default:
@@ -23644,13 +23646,34 @@ exports.default = uiReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var initialState = {};
+
+var _ui_actions = __webpack_require__(107);
+
+var _merge = __webpack_require__(109);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var initialState = {
+  interval: null
+};
 
 var entitiesReducer = function entitiesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
 
-  return state;
+  Object.freeze(state);
+  var newState = void 0;
+  switch (action.type) {
+    case _ui_actions.RECEIVE_INTERVAL:
+      var interval = action.interval;
+      newState = (0, _merge2.default)({}, state);
+      newState.interval = interval;
+      return newState;
+    default:
+      return state;
+  }
 };
 
 exports.default = entitiesReducer;
@@ -26842,6 +26865,141 @@ var UsersList = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = UsersList;
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(46);
+
+var _interval_list = __webpack_require__(179);
+
+var _interval_list2 = _interopRequireDefault(_interval_list);
+
+var _ui_actions = __webpack_require__(107);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    intervalList: state.ui.viewedUserIntervals,
+    user: state.ui.viewedUser
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    getInterval: function getInterval(userId, mappedId) {
+      return dispatch((0, _ui_actions.getInterval)(userId, mappedId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_interval_list2.default);
+
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var IntervalList = function (_React$Component) {
+  _inherits(IntervalList, _React$Component);
+
+  function IntervalList(props) {
+    _classCallCheck(this, IntervalList);
+
+    var _this = _possibleConstructorReturn(this, (IntervalList.__proto__ || Object.getPrototypeOf(IntervalList)).call(this, props));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(IntervalList, [{
+    key: "handleClick",
+    value: function handleClick(mappedId) {
+      this.props.getInterval(this.props.user, mappedId);
+      return;
+    }
+  }, {
+    key: "parseDate",
+    value: function parseDate(dateString) {
+      var dateTime = dateString.split("T");
+      var time = dateTime[1].split(".");
+      var date = dateTime[0].split("-");
+      var year = date.shift();
+      date.push(year);
+      date = date.join("/");
+
+      time.pop();
+      time = time.join("");
+
+      var parsedDate = date + " " + time;
+      return parsedDate;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      if (!this.props.intervalList) {
+        return _react2.default.createElement("div", null);
+      } else {
+        var allIntervals = this.props.intervalList.map(function (interval) {
+          var intervalTime = _this2.parseDate(interval["time_start"]);
+          return _react2.default.createElement(
+            "li",
+            { className: "interval-list-index-item",
+              onClick: function onClick() {
+                return _this2.handleClick(interval["mapped_id"]);
+              },
+              key: interval["mapped_id"] },
+            intervalTime
+          );
+        });
+        return _react2.default.createElement(
+          "div",
+          { id: "interval-list" },
+          _react2.default.createElement(
+            "ul",
+            { id: "interval-list-index" },
+            allIntervals
+          )
+        );
+      }
+    }
+  }]);
+
+  return IntervalList;
+}(_react2.default.Component);
+
+exports.default = IntervalList;
 
 /***/ })
 /******/ ]);

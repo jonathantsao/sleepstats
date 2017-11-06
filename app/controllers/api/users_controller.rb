@@ -7,10 +7,10 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
-    @user_mapped_ids = user.intervals.map {|int| int.mapped_id}
+    @user = User.find(params[:id])
+    @user_mapped_ids = @user.intervals.map {|int| int.mapped_id}
     @user_timestamps = @user_mapped_ids.map do |mapped_id|
-      user.user_intervals[mapped_id]["ts"]
+      @user.user_intervals[mapped_id]["ts"]
     end
     render :show
   end

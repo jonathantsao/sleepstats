@@ -13,7 +13,7 @@ export const receiveUsers = (users) => {
 export const receiveUser = (intervals) => {
   return {
     type: RECEIVE_USER,
-    intervals
+    intervals,
   };
 };
 

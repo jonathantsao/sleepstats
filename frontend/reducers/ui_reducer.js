@@ -4,6 +4,7 @@ import merge from 'lodash/merge';
 
 const initialState = {
   users: [],
+  viewedUser: null,
   viewedUserIntervals: null,
   viewedInterval: null
 };
@@ -20,6 +21,7 @@ const uiReducer = (state = initialState, action) => {
     case RECEIVE_USER:
       const intervals = action.intervals["intervals"];
       newState = merge({}, state);
+      newState.viewedUser = action.intervals["user"];
       newState.viewedUserIntervals = intervals;
       return newState;
     default:

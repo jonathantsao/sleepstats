@@ -4,3 +4,5 @@ json.intervals do
     json.time_start @user_timestamps[mapped_id]
   end
 end
+
+json.user @user.id
