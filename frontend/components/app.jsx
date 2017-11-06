@@ -2,7 +2,7 @@ import React from 'react';
 import UsersListContainer from './users_list/users_list_container';
 
 const App = () => (
-  <div>
+  <div id="page">
     <UsersListContainer />
   </div>
 );

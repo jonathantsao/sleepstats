@@ -1,9 +1,11 @@
-import { RECEIVE_USERS } from '../actions/ui_actions';
+import { RECEIVE_USERS, RECEIVE_USER } from '../actions/ui_actions';
 import merge from 'lodash/merge';
 
 
 const initialState = {
-  users: []
+  users: [],
+  viewedUserIntervals: null,
+  viewedInterval: null
 };
 
 const uiReducer = (state = initialState, action) => {
@@ -14,6 +16,11 @@ const uiReducer = (state = initialState, action) => {
       const allUsers = action.users["users"];
       newState = merge({}, state);
       newState.users = allUsers;
+      return newState;
+    case RECEIVE_USER:
+      const intervals = action.intervals["intervals"];
+      newState = merge({}, state);
+      newState.viewedUserIntervals = intervals;
       return newState;
     default:
       return state;

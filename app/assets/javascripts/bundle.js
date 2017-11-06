@@ -22168,7 +22168,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var App = function App() {
   return _react2.default.createElement(
     'div',
-    null,
+    { id: 'page' },
     _react2.default.createElement(_users_list_container2.default, null)
   );
 };
@@ -23600,7 +23600,9 @@ var _merge2 = _interopRequireDefault(_merge);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var initialState = {
-  users: []
+  users: [],
+  viewedUserIntervals: null,
+  viewedInterval: null
 };
 
 var uiReducer = function uiReducer() {
@@ -23614,6 +23616,11 @@ var uiReducer = function uiReducer() {
       var allUsers = action.users["users"];
       newState = (0, _merge2.default)({}, state);
       newState.users = allUsers;
+      return newState;
+    case _ui_actions.RECEIVE_USER:
+      var intervals = action.intervals["intervals"];
+      newState = (0, _merge2.default)({}, state);
+      newState.viewedUserIntervals = intervals;
       return newState;
     default:
       return state;
@@ -24463,7 +24470,7 @@ module.exports = identity;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUsers = exports.receiveUsers = exports.RECEIVE_USERS = undefined;
+exports.getInterval = exports.getUser = exports.getUsers = exports.receiveInterval = exports.receiveUser = exports.receiveUsers = exports.RECEIVE_INTERVAL = exports.RECEIVE_USER = exports.RECEIVE_USERS = undefined;
 
 var _api_util = __webpack_require__(108);
 
@@ -24472,6 +24479,8 @@ var APIUtil = _interopRequireWildcard(_api_util);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_USERS = exports.RECEIVE_USERS = "RECEIVE_USERS";
+var RECEIVE_USER = exports.RECEIVE_USER = "RECEIVE_USER";
+var RECEIVE_INTERVAL = exports.RECEIVE_INTERVAL = "RECEIVE_INTERVAL";
 
 var receiveUsers = exports.receiveUsers = function receiveUsers(users) {
   return {
@@ -24480,10 +24489,40 @@ var receiveUsers = exports.receiveUsers = function receiveUsers(users) {
   };
 };
 
+var receiveUser = exports.receiveUser = function receiveUser(intervals) {
+  return {
+    type: RECEIVE_USER,
+    intervals: intervals
+  };
+};
+
+var receiveInterval = exports.receiveInterval = function receiveInterval(interval) {
+  return {
+    type: RECEIVE_INTERVAL,
+    interval: interval
+  };
+};
+
 var getUsers = exports.getUsers = function getUsers() {
   return function (dispatch) {
     return APIUtil.getUsers().then(function (users) {
       return dispatch(receiveUsers(users));
+    });
+  };
+};
+
+var getUser = exports.getUser = function getUser(id) {
+  return function (dispatch) {
+    return APIUtil.getUser(id).then(function (intervals) {
+      return dispatch(receiveUser(intervals));
+    });
+  };
+};
+
+var getInterval = exports.getInterval = function getInterval(userId, mappedId) {
+  return function (dispatch) {
+    return APIUtil.getInterval(userId, mappedId).then(function (interval) {
+      return dispatch(receiveInterval(interval));
     });
   };
 };
@@ -24502,6 +24541,20 @@ var getUsers = exports.getUsers = function getUsers() {
   return $.ajax({
     method: "GET",
     url: "/api/users"
+  });
+};
+
+var getUser = exports.getUser = function getUser(id) {
+  return $.ajax({
+    method: "GET",
+    url: "/api/users/" + id
+  });
+};
+
+var getInterval = exports.getInterval = function getInterval(userId, mappedId) {
+  return $.ajax({
+    method: "GET",
+    url: "/api/users/" + userId + "/intervals/" + mappedId
   });
 };
 
@@ -26724,10 +26777,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var UsersList = function (_React$Component) {
   _inherits(UsersList, _React$Component);
 
-  function UsersList() {
+  function UsersList(props) {
     _classCallCheck(this, UsersList);
 
-    return _possibleConstructorReturn(this, (UsersList.__proto__ || Object.getPrototypeOf(UsersList)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (UsersList.__proto__ || Object.getPrototypeOf(UsersList)).call(this, props));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
   }
 
   _createClass(UsersList, [{
@@ -26737,24 +26793,34 @@ var UsersList = function (_React$Component) {
       return;
     }
   }, {
+    key: "handleClick",
+    value: function handleClick(id) {
+      this.props.getUser(id);
+      return;
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       if (this.props.users.length === 0) {
         return _react2.default.createElement("div", null);
       } else {
         var allUsers = this.props.users.map(function (user) {
           return _react2.default.createElement(
             "li",
-            { key: user["id"] },
+            { className: "user-list-index-item",
+              onClick: _this2.handleClick(user["id"]),
+              key: user["id"] },
             user["name"]
           );
         });
         return _react2.default.createElement(
           "div",
-          null,
+          { id: "user-list" },
           _react2.default.createElement(
             "ul",
-            null,
+            { id: "user-list-index" },
             allUsers
           )
         );
