@@ -5,6 +5,7 @@ class IntervalList extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.getName = this.getName.bind(this);
   }
 
   handleClick(mappedId) {
@@ -27,6 +28,18 @@ class IntervalList extends React.Component {
     return parsedDate;
   }
 
+  getName() {
+    if (!this.props.user) {
+      return;
+    } else {
+      for (let i = 0; i < this.props.users.length; i++) {
+        if (this.props.users[i].id == this.props.user) {
+          return this.props.users[i].name;
+        }
+      }
+    }
+  }
+
 
   render() {
     if (!this.props.intervalList) {
@@ -42,8 +55,10 @@ class IntervalList extends React.Component {
           </li>
         );
       });
+      const name = this.getName()
       return (
         <div id="interval-list">
+          <h3 id="interval-list-title">{`${name}'s`} Intervals</h3>
           <ul id="interval-list-index">
             { allIntervals }
           </ul>

@@ -26852,6 +26852,11 @@ var UsersList = function (_React$Component) {
           "div",
           { id: "user-list" },
           _react2.default.createElement(
+            "h3",
+            { id: "user-list-title" },
+            "Users"
+          ),
+          _react2.default.createElement(
             "ul",
             { id: "user-list-index" },
             allUsers
@@ -26890,7 +26895,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   return {
     intervalList: state.ui.viewedUserIntervals,
-    user: state.ui.viewedUser
+    user: state.ui.viewedUser,
+    users: state.ui.users
   };
 };
 
@@ -26938,6 +26944,7 @@ var IntervalList = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IntervalList.__proto__ || Object.getPrototypeOf(IntervalList)).call(this, props));
 
     _this.handleClick = _this.handleClick.bind(_this);
+    _this.getName = _this.getName.bind(_this);
     return _this;
   }
 
@@ -26964,6 +26971,19 @@ var IntervalList = function (_React$Component) {
       return parsedDate;
     }
   }, {
+    key: "getName",
+    value: function getName() {
+      if (!this.props.user) {
+        return;
+      } else {
+        for (var i = 0; i < this.props.users.length; i++) {
+          if (this.props.users[i].id == this.props.user) {
+            return this.props.users[i].name;
+          }
+        }
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -26983,9 +27003,16 @@ var IntervalList = function (_React$Component) {
             intervalTime
           );
         });
+        var name = this.getName();
         return _react2.default.createElement(
           "div",
           { id: "interval-list" },
+          _react2.default.createElement(
+            "h3",
+            { id: "interval-list-title" },
+            name + "'s",
+            " Intervals"
+          ),
           _react2.default.createElement(
             "ul",
             { id: "interval-list-index" },

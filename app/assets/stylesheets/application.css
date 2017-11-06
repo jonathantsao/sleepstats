@@ -17,9 +17,11 @@
 body {
   background-color: #170447;
   color: white;
+  font-family: 'Roboto',arial,sans-serif;
 }
 
 #page {
   display: flex;
   flex-direction: row;
+  height: 1000px;
 }

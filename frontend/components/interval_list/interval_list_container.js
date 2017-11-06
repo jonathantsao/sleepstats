@@ -5,7 +5,8 @@ import { getInterval } from '../../actions/ui_actions';
 const mapStateToProps = (state) => {
   return {
     intervalList: state.ui.viewedUserIntervals,
-    user: state.ui.viewedUser
+    user: state.ui.viewedUser,
+    users: state.ui.users,
   };
 };
 

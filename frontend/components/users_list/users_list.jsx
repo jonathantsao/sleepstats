@@ -33,6 +33,7 @@ class UsersList extends React.Component {
       });
       return (
         <div id="user-list">
+          <h3 id="user-list-title">Users</h3>
           <ul id="user-list-index">
             { allUsers }
           </ul>
