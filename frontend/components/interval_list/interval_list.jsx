@@ -19,7 +19,7 @@ class IntervalList extends React.Component {
     let date = dateTime[0].split("-");
     const year = date.shift();
     date.push(year);
-    date = date.join("/");
+    date = date.join(".");
 
     time.pop();
     time = time.join("");

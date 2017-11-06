@@ -6,7 +6,6 @@ const initialState = {
   users: [],
   viewedUser: null,
   viewedUserIntervals: null,
-  viewedInterval: null
 };
 
 const uiReducer = (state = initialState, action) => {

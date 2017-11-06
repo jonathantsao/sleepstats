@@ -1,0 +1,148 @@
+#interval-title {
+  padding: 0px 100px;
+  text-align: center;
+}
+
+#interval-section {
+  width: 100%;
+}
+
+#head {
+  display: flex;
+  flex-direction: column;
+}
+
+#large-header-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#small-header-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#interval-date {
+  font-size: 34px;
+  width: 200px;
+  height: 82px;
+  text-align: center;
+}
+
+#score {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#score-number {
+  margin: 0;
+  border: 5px solid white;
+  border-radius: 100%;
+  padding: 28px;
+  font-size: 54px;
+}
+
+#score-text {
+  margin: 10px;
+}
+
+#avgRoomTemp-number {
+  text-align: center;
+  padding: 42px;
+  border: 2px solid white;
+  border-radius: 100%;
+  font-size: 25px;
+  margin: 0 auto;
+}
+
+#avgRoomTemp-text {
+  width: 116px;
+  margin-top: 16px;
+}
+
+#avgBedTemp-text {
+  width: 116px;
+  margin-top: 16px;
+}
+
+#avgBedTemp-number {
+  text-align: center;
+  padding: 42px;
+  border: 2px solid white;
+  border-radius: 100%;
+  font-size: 25px;
+  margin: 0 auto;
+}
+
+#avgRespRate-text {
+  margin-top: 16px;
+  width: 180px;
+}
+
+#avgRespRate-number {
+  text-align: center;
+  padding: 42px;
+  border: 2px solid white;
+  border-radius: 100%;
+  font-size: 25px;
+  margin: 0 auto;
+  width: 27px;
+}
+
+#avgHeartRate-text {
+  margin-top: 16px;
+  width: 138px;
+}
+
+#avgHeartRate-number {
+  text-align: center;
+  padding: 42px;
+  border: 2px solid white;
+  border-radius: 100%;
+  font-size: 25px;
+  margin: 0 auto;
+  width: 27px;
+}
+
+#stage-timeline {
+  list-style-type: none;
+}
+
+#stage-timeline li {
+  padding-left: 18px;
+}
+
+.awake {
+  border-left: 7px solid #26A799;
+}
+
+.light {
+  border-left: 7px solid #D989FA;
+}
+
+.deep {
+  border-left: 7px solid #9694B4;
+}
+
+.out {
+  border-left: 7px solid #5D1215;
+}
+
+#timelines {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#tnt-timeline {
+  list-style-type: none;
+}
+
+.tnt-item {
+  border-left: 7px solid white;
+  padding-left: 18px;
+}
