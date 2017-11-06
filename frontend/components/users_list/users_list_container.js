@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import usersList from './users_list';
-import { getUsers } from '../../actions/ui_actions';
+import { getUsers, getUser } from '../../actions/ui_actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUsers: () => dispatch(getUsers())
+    getUsers: () => dispatch(getUsers()),
+    getUser: (id) => dispatch(getUser(id))
   };
 };
 

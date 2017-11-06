@@ -15,6 +15,6 @@ export const getUser = (id) => {
 export const getInterval = (userId, mappedId) => {
   return $.ajax({
     method: "GET",
-    url: `/api/users/${userId}/intervals/${mappedId}`
+    url: `/api/users/${userId}/interval/${mappedId}`
   });
 };

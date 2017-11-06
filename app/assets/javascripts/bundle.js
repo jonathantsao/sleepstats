@@ -22163,13 +22163,18 @@ var _users_list_container = __webpack_require__(176);
 
 var _users_list_container2 = _interopRequireDefault(_users_list_container);
 
+var _interval_list_container = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./interval_list/interval_list_container\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+var _interval_list_container2 = _interopRequireDefault(_interval_list_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
   return _react2.default.createElement(
     'div',
     { id: 'page' },
-    _react2.default.createElement(_users_list_container2.default, null)
+    _react2.default.createElement(_users_list_container2.default, null),
+    _react2.default.createElement(_interval_list_container2.default, null)
   );
 };
 
@@ -24554,7 +24559,7 @@ var getUser = exports.getUser = function getUser(id) {
 var getInterval = exports.getInterval = function getInterval(userId, mappedId) {
   return $.ajax({
     method: "GET",
-    url: "/api/users/" + userId + "/intervals/" + mappedId
+    url: "/api/users/" + userId + "/interval/" + mappedId
   });
 };
 
@@ -26743,6 +26748,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     getUsers: function getUsers() {
       return dispatch((0, _ui_actions.getUsers)());
+    },
+    getUser: function getUser(id) {
+      return dispatch((0, _ui_actions.getUser)(id));
     }
   };
 };
@@ -26810,7 +26818,9 @@ var UsersList = function (_React$Component) {
           return _react2.default.createElement(
             "li",
             { className: "user-list-index-item",
-              onClick: _this2.handleClick(user["id"]),
+              onClick: function onClick() {
+                return _this2.handleClick(user["id"]);
+              },
               key: user["id"] },
             user["name"]
           );

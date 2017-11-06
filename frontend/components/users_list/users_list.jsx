@@ -25,7 +25,7 @@ class UsersList extends React.Component {
       const allUsers = this.props.users.map((user) => {
         return (
           <li className="user-list-index-item"
-            onClick={this.handleClick(user["id"])}
+            onClick={() => this.handleClick(user["id"])}
             key={user["id"]}>
             {user["name"]}
           </li>
