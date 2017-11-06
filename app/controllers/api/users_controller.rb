@@ -17,7 +17,8 @@ class Api::UsersController < ApplicationController
 
   def show_interval
     user = User.find(params[:id])
-    @interval = user.user_intervals[params[:mapped_id]]
+    mapped_id = params[:mapped_id].to_i
+    @interval = user.user_intervals[mapped_id]
     render json: @interval
   end
 

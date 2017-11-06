@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   attr_reader :user_intervals
 
-  has_many :intervals
+  has_many :intervals, dependent: :destroy
   after_create :http_parse
 
   def user_intervals
